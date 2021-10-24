@@ -1,0 +1,16 @@
+$textColor: #15023a;
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+
+    h1 {
+        font-size: 30px;
+        text-transform: uppercase;
+        font-weight: 700;
+        margin-top: 30px;
+        color: $textColor;
+    }
+}
