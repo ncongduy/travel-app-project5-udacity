@@ -1,6 +1,22 @@
-$backgroundColor: #272d34;
-$color: #fff;
-
 footer {
+	.navbar {
+        height: 10vh;
 
+		.container-fluid {
+            justify-content: space-around;
+
+            .navbar-brand {
+                font-size: 16px;
+
+                a {
+                    text-decoration: none;
+                    color: #fff;
+
+                    &:hover {
+                        opacity: 0.7;
+                    }
+                }
+            }
+		}
+	}
 }

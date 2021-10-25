@@ -5,11 +5,8 @@ import { postDataToServer } from './js/postDataToServer';
 
 import './styles/resets.scss';
 import './styles/base.scss';
-import './styles/footer.scss';
-import './styles/form.scss';
 import './styles/header.scss';
-import './styles/results.scss';
-
-// alert('CHANGED!');
+import './styles/main.scss';
+import './styles/footer.scss';
 
 export { checkForUrl, handleSubmit, getDataFromServer, postDataToServer };
