@@ -10,9 +10,9 @@
     "build-dev": "webpack-dev-server  --config webpack.dev.js --open"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nguyen Cong Duy",
   "license": "ISC",
-  "description": "",
+  "description": "This is a travel app. User type in date and location. After that, they will know information weather at their destination.",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
