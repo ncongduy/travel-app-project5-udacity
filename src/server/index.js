@@ -36,10 +36,12 @@ async function getData(url) {
 // setup static direction to dist folder
 app.use(express.static('dist'));
 
+console.log(__dirname);
+
 // routing
 app.get('/', function (req, res) {
-	res.sendFile('dist/index.html');
-	// res.sendFile(path.resolve('src/client/views/index.html'));
+	// res.sendFile('dist/index.html');
+	res.sendFile(path.resolve('src/client/views/index.html'));
 });
 
 app.get('/test', function (req, res) {
@@ -63,8 +65,8 @@ app.post('/data', function (req, res) {
 		.then(() => res.send(data));
 });
 
-// run server at port 5000
-const port = process.env.PORT || 5000;
+// run server at port 9000
+const port = process.env.PORT || 9000;
 app.listen(port, function () {
-	console.log(`Example app listening on port ${port}!`);
+	console.log(`App listening at http://localhost:${port}`);
 });
