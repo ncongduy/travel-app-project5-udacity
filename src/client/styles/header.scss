@@ -1,6 +1,11 @@
 header {
+    position: relative;
 	.navbar {
         height: 10vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
 
 		.container-fluid {
             justify-content: flex-start;
