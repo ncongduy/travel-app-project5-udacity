@@ -16,18 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // using environment variable to save apiKey
 dotenv.config();
-const apiKey = process.env.API_KEY;
+const apiKeyWeatherbit = process.env.API_KEY_WEATHERBIT;
+const username = process.env.USER_NAME;
 
-
-// 
+//
 // Start Fetch API section
-// 
+//
 
-// save data from MeaningCloud API to variable
-const dataFromGeoNames = {};
-
-// function get data from GeoNames
-async function getDataGeoNames(url) {
+// function get data
+async function getData(url) {
 	try {
 		const fetchData = await fetch(url);
 		const dataResponse = await fetchData.json();
@@ -38,15 +35,35 @@ async function getDataGeoNames(url) {
 	}
 }
 
-const url = `http://api.geonames.org/searchJSON?style=SHORT&username=ncongduy&maxRows=1&q=pari`;
-getDataGeoNames(url).then((dataResponse) => {
-	Object.assign(dataFromGeoNames, dataResponse.geonames[0]);
-	console.log(dataFromGeoNames);
-});
+//
+// fetch API - input: city, date => output: forecast weather
+//
+const dataFromWeatherbit = {};
 
-// 
+const urlGeoNames = `http://api.geonames.org/searchJSON?style=SHORT&username=${username}&maxRows=1&q=pari`;
+getData(urlGeoNames)
+	.then((dataResponse) => {
+		const latitude = dataResponse.geonames[0].lat;
+		const longitude = dataResponse.geonames[0].lng;
+
+		return { latitude, longitude };
+	})
+	.then((dataGeoNames) => {
+		const { latitude, longitude } = dataGeoNames;
+		const urlWeatherbit = `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKeyWeatherbit}&lat=${latitude}&lon=${longitude}&days=16`;
+
+		return urlWeatherbit;
+	})
+	.then((urlWeatherbit) => getData(urlWeatherbit))
+	.then((dataResponse) => {
+		Object.assign(dataFromWeatherbit, dataResponse);
+		console.log(dataFromWeatherbit);
+	});
+
+
+//
 // End Fetch API section
-// 
+//
 
 // setup static direction to dist folder
 app.use(express.static('dist'));
