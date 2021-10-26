@@ -18,11 +18,16 @@ app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 const apiKey = process.env.API_KEY;
 
-// save data from MeaningCloud API to variable
-const data = {};
 
-// function get data from MeaningCloud API
-async function getData(url) {
+// 
+// Start Fetch API section
+// 
+
+// save data from MeaningCloud API to variable
+const dataFromGeoNames = {};
+
+// function get data from GeoNames
+async function getDataGeoNames(url) {
 	try {
 		const fetchData = await fetch(url);
 		const dataResponse = await fetchData.json();
@@ -32,6 +37,16 @@ async function getData(url) {
 		alert(error);
 	}
 }
+
+const url = `http://api.geonames.org/searchJSON?style=SHORT&username=ncongduy&maxRows=1&q=pari`;
+getDataGeoNames(url).then((dataResponse) => {
+	Object.assign(dataFromGeoNames, dataResponse.geonames[0]);
+	console.log(dataFromGeoNames);
+});
+
+// 
+// End Fetch API section
+// 
 
 // setup static direction to dist folder
 app.use(express.static('dist'));
@@ -57,13 +72,13 @@ app.get('/data', function (req, res) {
 	res.send(data);
 });
 
-app.post('/data', function (req, res) {
-	console.log('POST', req.body);
-	const url = `https://api.meaningcloud.com/sentiment-2.1?key=${apiKey}&lang=auto&${req.body.inputData}`;
-	getData(url)
-		.then((dataResponse) => Object.assign(data, dataResponse))
-		.then(() => res.send(data));
-});
+// app.post('/data', function (req, res) {
+// 	console.log('POST', req.body);
+// 	const url = `http://api.geonames.org/searchJSON?style=SHORT&username=ncongduy&maxRows=10&q=pari`;
+// 	getDataGeoNames(url)
+// 		.then((dataResponse) => Object.assign(data, dataResponse))
+// 		.then(() => res.send(data));
+// });
 
 // run server at port 9000
 const port = process.env.PORT || 9000;
