@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <header>
+    <header id="header">
         <nav class="navbar navbar-dark bg-dark">
             <div class="container-fluid">
                 <a class="navbar-brand" href="https://github.com/ncongduy" target="_blank">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="form-button">
-                    <button class="btn btn-primary" type="submit" id="search-btn">Search</button>
+                    <button class="btn btn-primary" type="submit" id="search-btn" data-scroll="info">Search</button>
                 </div>
             </form>
         </section>
@@ -82,6 +82,9 @@
                         <p id="time-remain">You have 7 days to departure.</p>
                     </li>
                 </ul>
+            </div>
+            <div class="back-to-top" data-scroll="header">
+                <i class="fas fa-3x fa-arrow-alt-circle-up" data-scroll="header"></i>
             </div>
         </section>
     </main>

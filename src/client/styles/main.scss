@@ -74,5 +74,12 @@ main {
 				}
 			}
 		}
+
+		.back-to-top {
+			position: absolute;
+			bottom: 5vh;
+			right: 5vh;
+			z-index: 3;
+		}
 	}
 }
