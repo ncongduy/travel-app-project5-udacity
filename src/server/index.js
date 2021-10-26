@@ -16,18 +16,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // using environment variable to save apiKey
 dotenv.config();
+const username = process.env.USER_NAME_GEONAMES;
 const apiKeyWeatherbit = process.env.API_KEY_WEATHERBIT;
-const username = process.env.USER_NAME;
+const apiKeyPixabay = process.env.API_KEY_PIXABAY;
 
-//
-// Start Fetch API section
-//
-
-// function get data
-async function getData(url) {
+// function fetch data
+async function fetchData(url) {
 	try {
-		const fetchData = await fetch(url);
-		const dataResponse = await fetchData.json();
+		const data = await fetch(url);
+		const dataResponse = await data.json();
 
 		return dataResponse;
 	} catch (error) {
@@ -36,34 +33,41 @@ async function getData(url) {
 }
 
 //
-// fetch API - input: city, date => output: forecast weather
+// function getData and save to variable
 //
 const dataFromWeatherbit = {};
+const dataFromPixabay = {};
 
-const urlGeoNames = `http://api.geonames.org/searchJSON?style=SHORT&username=${username}&maxRows=1&q=pari`;
-getData(urlGeoNames)
-	.then((dataResponse) => {
-		const latitude = dataResponse.geonames[0].lat;
-		const longitude = dataResponse.geonames[0].lng;
+function getData() {
+	const urlGeoNames = `http://api.geonames.org/searchJSON?style=SHORT&username=${username}&maxRows=1&q=ho%20chi%20minh`;
+	fetchData(urlGeoNames)
+		.then((dataGeoNames) => {
+			const latitude = dataGeoNames.geonames[0].lat;
+			const longitude = dataGeoNames.geonames[0].lng;
 
-		return { latitude, longitude };
-	})
-	.then((dataGeoNames) => {
-		const { latitude, longitude } = dataGeoNames;
-		const urlWeatherbit = `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKeyWeatherbit}&lat=${latitude}&lon=${longitude}&days=16`;
+			return { latitude, longitude };
+		})
+		.then((latitudeAndLongitude) => {
+			const { latitude, longitude } = latitudeAndLongitude;
+			// const urlWeatherbitCurrent = `https://api.weatherbit.io/v2.0/current?key=${apiKeyWeatherbit}&lat=${latitude}&lon=${longitude}`;
+			const urlWeatherbitForecast = `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKeyWeatherbit}&lat=${latitude}&lon=${longitude}&days=16`;
 
-		return urlWeatherbit;
-	})
-	.then((urlWeatherbit) => getData(urlWeatherbit))
-	.then((dataResponse) => {
-		Object.assign(dataFromWeatherbit, dataResponse);
-		console.log(dataFromWeatherbit);
-	});
+			return urlWeatherbitForecast;
+		})
+		.then((urlWeatherbitForecast) => fetchData(urlWeatherbitForecast))
+		.then((dataWeatherbit) => {
+			Object.assign(dataFromWeatherbit, dataWeatherbit);
+			return dataFromWeatherbit.city_name;
+		})
+		.then((cityName) => {
+			const urlPixabay = `https://pixabay.com/api/?key=${apiKeyPixabay}&q=${cityName}&image_type=photo&pretty=true`;
+			return fetchData(urlPixabay);
+		})
+		.then((dataPixabay) => Object.assign(dataFromPixabay, dataPixabay))
+		.catch((error) => console.log(error));
+}
 
-
-//
-// End Fetch API section
-//
+getData();
 
 // setup static direction to dist folder
 app.use(express.static('dist'));
@@ -84,9 +88,14 @@ app.post('/test', function (req, res) {
 	res.send(mockAPIResponse);
 });
 
-app.get('/data', function (req, res) {
+app.get('/weatherbit', function (req, res) {
 	console.log('GET', req.body);
-	res.send(data);
+	res.send(dataFromWeatherbit);
+});
+
+app.get('/pixabay', function (req, res) {
+	console.log('GET', req.body);
+	res.send(dataFromPixabay);
 });
 
 // app.post('/data', function (req, res) {
