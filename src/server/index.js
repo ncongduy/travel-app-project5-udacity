@@ -38,8 +38,8 @@ async function fetchData(url) {
 const dataFromWeatherbit = {};
 const dataFromPixabay = {};
 
-function getData() {
-	const urlGeoNames = `http://api.geonames.org/searchJSON?style=SHORT&username=${username}&maxRows=1&q=ho%20chi%20minh`;
+function getData(data) {
+	const urlGeoNames = `http://api.geonames.org/searchJSON?style=SHORT&username=${username}&maxRows=1&q=${data.city}`;
 	fetchData(urlGeoNames)
 		.then((dataGeoNames) => {
 			const latitude = dataGeoNames.geonames[0].lat;
@@ -67,8 +67,6 @@ function getData() {
 		.catch((error) => console.log(error));
 }
 
-getData();
-
 // setup static direction to dist folder
 app.use(express.static('dist'));
 
@@ -88,23 +86,15 @@ app.post('/test', function (req, res) {
 	res.send(mockAPIResponse);
 });
 
-app.get('/weatherbit', function (req, res) {
+app.get('/data', function (req, res) {
 	console.log('GET', req.body);
-	res.send(dataFromWeatherbit);
+	res.send({ dataFromWeatherbit, dataFromPixabay });
 });
 
-app.get('/pixabay', function (req, res) {
-	console.log('GET', req.body);
-	res.send(dataFromPixabay);
+app.post('/data', function (req, res) {
+	console.log('POST', req.body);
+	getData(req.body);
 });
-
-// app.post('/data', function (req, res) {
-// 	console.log('POST', req.body);
-// 	const url = `http://api.geonames.org/searchJSON?style=SHORT&username=ncongduy&maxRows=10&q=pari`;
-// 	getDataGeoNames(url)
-// 		.then((dataResponse) => Object.assign(data, dataResponse))
-// 		.then(() => res.send(data));
-// });
 
 // run server at port 9000
 const port = process.env.PORT || 9000;
