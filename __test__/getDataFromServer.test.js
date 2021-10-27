@@ -1,4 +1,4 @@
-import { getDataFromServer } from '../src/client/js/getDataFromServer';
+import { getDataFromServer } from '../src/client/js/fetchAPI/getDataFromServer';
 import { mockAPI } from '../src/server/mockAPI';
 
 describe('get data from server', () => {

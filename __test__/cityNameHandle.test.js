@@ -1,4 +1,4 @@
-import { cityNameHandle } from '../src/client/js/app';
+import { cityNameHandle } from '../src/client/js/utility/cityNameHandle';
 
 describe('cityNameHandle function', () => {
 	test('it should return a string', () => {
