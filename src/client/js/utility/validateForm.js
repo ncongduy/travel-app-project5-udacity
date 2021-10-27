@@ -1,7 +1,7 @@
 export function validateForm(form, city, date, daysForecast) {
 	const dateElement = document.querySelectorAll(
 		'#form form div.invalid-feedback'
-	)[1];
+	);
 	const cityValue = city.value.trim();
 	const dateValue = date.value.trim();
 
@@ -10,11 +10,19 @@ export function validateForm(form, city, date, daysForecast) {
 		return false;
 	}
 
-	if (daysForecast < 1 || daysForecast > 16) {
-		dateElement.classList.add('invalid-date');
+	if (!Client.checkCityName(cityValue)) {
+		dateElement[0].classList.add('invalid-form');
 		return false;
 	}
 
-    dateElement.classList.remove('invalid-date');
+	dateElement[0].classList.remove('invalid-form');
+
+
+	if (daysForecast < 1 || daysForecast > 16) {
+		dateElement[1].classList.add('invalid-form');
+		return false;
+	}
+
+	dateElement[1].classList.remove('invalid-form');
 	return true;
 }

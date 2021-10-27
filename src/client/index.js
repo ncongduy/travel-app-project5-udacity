@@ -7,6 +7,7 @@ import { handleDataFromPixabay } from './js/renderUI/handleDataFromPixabay';
 import { scrollToElement } from './js/utility/scrollToElement';
 import { cityNameHandle } from './js/utility/cityNameHandle';
 import { validateForm } from './js/utility/validateForm';
+import { checkCityName } from './js/utility/checkCityName';
 
 import './styles/resets.scss';
 import './styles/base.scss';
@@ -27,4 +28,5 @@ export {
 	scrollToElement,
 	cityNameHandle,
 	validateForm,
+	checkCityName,
 };
