@@ -14,6 +14,7 @@ async function app() {
 		// declare variable
 		const dateCurrent = new Date();
 		const dateTravel = new Date(date.value);
+
 		const daysForecast =
 			Math.floor(
 				(dateTravel.getTime() - dateCurrent.getTime()) /
@@ -30,9 +31,14 @@ async function app() {
 
 		Client.postDataToServer(data, localServer)
 			.then((localServer) => Client.getDataFromServer(localServer))
-			.then((dataResponse) =>
-				Client.renderUI(dataResponse, daysRemain, infoSection)
-			)
+			.then((dataResponse) => {
+				// save to localStorage
+				const database = [dataResponse, daysRemain];
+				localStorage.setItem('database', JSON.stringify(database));
+
+				// render to UI
+				Client.renderUI(dataResponse, daysRemain, infoSection);
+			})
 			.then(() => {
 				$('#city').value = '';
 				$('#date').value = '';
@@ -48,6 +54,14 @@ async function app() {
 		if (evt.target.className === 'fas fa-3x fa-arrow-alt-circle-up') {
 			Client.scrollToElement(evt.target);
 		}
+	});
+
+	// render UI when user reload website
+	window.addEventListener('load', () => {
+		const dataFromLocalStorage =
+			JSON.parse(localStorage.getItem('database')) || [];
+		const [dataResponse, daysRemain] = dataFromLocalStorage;
+		Client.renderUI(dataResponse, daysRemain, infoSection);
 	});
 }
 
