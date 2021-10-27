@@ -1,6 +1,6 @@
 // import { checkForUrl } from './js/urlChecker';
 // import { handleSubmit } from './js/formHandler';
-// import { getDataFromServer } from './js/getDataFromServer';
+import { getDataFromServer } from './js/getDataFromServer';
 import { postDataToServer } from './js/postDataToServer';
 import { app } from './js/app';
 
@@ -15,4 +15,4 @@ app();
 
 // export { checkForUrl, handleSubmit, getDataFromServer, postDataToServer, app };
 
-export { app, postDataToServer };
+export { app, postDataToServer, getDataFromServer };
