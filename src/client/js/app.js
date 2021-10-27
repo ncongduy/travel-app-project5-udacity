@@ -1,7 +1,5 @@
-const $ = document.querySelector.bind(document);
-
-function scrollToElement(evt) {
-	const scrollToElement = document.getElementById(evt.target.dataset.scroll);
+function scrollToElement(element) {
+	const scrollToElement = document.getElementById(element.dataset.scroll);
 	scrollToElement.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -18,10 +16,11 @@ function cityNameHandle(cityName) {
 	return newCityName;
 }
 
-function renderUI({ dataFromWeatherbit, dataFromPixabay }, daysRemain) {
-	// access section element have id="info"
-	const infoSection = $('#info');
-
+function renderUI(
+	{ dataFromWeatherbit, dataFromPixabay },
+	daysRemain,
+	infoSection
+) {
 	// dataFromWeatherbit
 	if (!dataFromWeatherbit) return;
 	const cityName = dataFromWeatherbit.city_name;
@@ -93,8 +92,12 @@ function renderUI({ dataFromWeatherbit, dataFromPixabay }, daysRemain) {
 }
 
 async function app() {
-	// add event listener for search button
+	// access DOM element
+	const $ = document.querySelector.bind(document);
 	const searchBtn = $('#search-btn');
+	const infoSection = $('#info');
+
+	// add event listener for search button
 	searchBtn.addEventListener('click', (evt) => {
 		evt.preventDefault();
 		const city = $('#city');
@@ -114,14 +117,20 @@ async function app() {
 
 		Client.postDataToServer(data, localServer)
 			.then((localServer) => Client.getDataFromServer(localServer))
-			.then((dataResponse) => renderUI(dataResponse, daysRemain));
+			.then((dataResponse) =>
+				renderUI(dataResponse, daysRemain, infoSection)
+			);
 
-		setTimeout(() => scrollToElement(evt), 1500);
+		setTimeout(() => scrollToElement(evt.target), 1500);
 	});
 
-	// add event listener for 'back to top' button
-	// const backToTop = $('.back-to-top');
-	// backToTop.addEventListener('click', scrollToElement);
+	// when user click icon backToTop, website scroll to top
+	infoSection.addEventListener('click', (evt) => {
+		console.log('click info section', evt.target.className);
+		if (evt.target.className === 'fas fa-3x fa-arrow-alt-circle-up') {
+			scrollToElement(evt.target);
+		}
+	});
 }
 
 export { app, cityNameHandle };
