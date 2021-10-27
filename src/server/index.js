@@ -21,7 +21,7 @@ const apiKeyWeatherbit = process.env.API_KEY_WEATHERBIT;
 const apiKeyPixabay = process.env.API_KEY_PIXABAY;
 
 //
-// function getData; input: city, date, days; output: save data to variable dataFromWeatherbit, dataFromPixabay
+// function getData; input: city, date, daysForecast; output: save data to variable dataFromWeatherbit, dataFromPixabay
 //
 const dataFromWeatherbit = {};
 const dataFromPixabay = {};
@@ -36,7 +36,7 @@ async function getData(data) {
 		const longitude = dataGeoNames.geonames[0].lng;
 
 		// fetch data from Weatherbit
-		const urlWeatherbitForecast = `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKeyWeatherbit}&lat=${latitude}&lon=${longitude}&days=${data.days}`;
+		const urlWeatherbitForecast = `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKeyWeatherbit}&lat=${latitude}&lon=${longitude}&days=${data.daysForecast}`;
 		const fetchWeatherbit = await fetch(urlWeatherbitForecast);
 		const dataWeatherbit = await fetchWeatherbit.json();
 		Object.assign(dataFromWeatherbit, dataWeatherbit);
@@ -53,8 +53,6 @@ async function getData(data) {
 		alert(error);
 	}
 }
-
-// getData({ city: 'ho chi minh', days: '1' });
 
 // setup static direction to dist folder
 app.use(express.static('dist'));
