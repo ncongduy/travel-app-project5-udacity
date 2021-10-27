@@ -29,7 +29,6 @@ function renderUI(
 	const lowTemp = dataWeather[dataWeather.length - 1].low_temp;
 	const dateTime = dataWeather[dataWeather.length - 1].datetime;
 	const timeTravel = new Date(dateTime).toDateString();
-
 	let timeRemain;
 	if (daysRemain > 1) {
 		timeRemain = `You have ${daysRemain} days to departure.`;
@@ -50,7 +49,6 @@ function renderUI(
 			isHavePicture = true;
 		}
 	});
-
 	if (!isHavePicture) {
 		pictureURL = arrayPictures[arrayPictures.length - 1].webformatURL;
 	}

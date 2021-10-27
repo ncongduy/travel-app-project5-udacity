@@ -1,7 +1,7 @@
 // async function POST data to server
 async function postDataToServer(data, localServer) {
 	try {
-		await fetch(localServer, {
+		const postData = await fetch(localServer, {
 			method: 'POST',
 			mode: 'cors',
 			cache: 'no-cache',
@@ -16,7 +16,7 @@ async function postDataToServer(data, localServer) {
 
 		return localServer;
 	} catch (error) {
-		alert(error);
+		console.log(error);
 	}
 }
 

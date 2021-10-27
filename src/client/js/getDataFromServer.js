@@ -6,7 +6,7 @@ async function getDataFromServer(localServer) {
 
 		return dataResponse;
 	} catch (error) {
-		alert(error);
+		console.log(error);
 	}
 }
 

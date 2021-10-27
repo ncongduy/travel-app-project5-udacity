@@ -70,7 +70,7 @@ app.get('/test', function (req, res) {
 });
 
 app.post('/test', function (req, res) {
-	res.send(mockAPIResponse);
+	res.send(req.body);
 });
 
 app.get('/data', function (req, res) {
