@@ -21,6 +21,10 @@ main {
 			div {
 				margin: 1.25rem;
 			}
+
+			div.invalid-feedback.invalid-date {
+				display: block;
+			}
 		}
 	}
 

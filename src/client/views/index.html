@@ -37,17 +37,17 @@
             <form class="needs-validation" novalidate>
                 <div>
                     <label for="city" class="form-label">City</label>
-                    <input type="text" class="form-control" id="city" value="ho chi minh" required>
+                    <input type="text" class="form-control" id="city" required>
                     <div class="invalid-feedback">
                         Please provide a valid city.
                     </div>
                 </div>
                 <div>
                     <label for="date" class="form-label">Date</label>
-                    <input type="date" class="form-control" id="date" value="2021-10-27" required>
+                    <input type="date" class="form-control" id="date" required>
                     <div class="invalid-feedback">
-                        Please provide a valid date.
-                    </div>
+                        Please provide a valid date from today to 15 days afterwards.
+                    </div>                    
                 </div>
                 <div class="form-button">
                     <button class="btn btn-primary" type="submit" id="search-btn" data-scroll="info">Search</button>
