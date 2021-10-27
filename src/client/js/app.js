@@ -5,7 +5,7 @@ function scrollToElement(evt) {
 	scrollToElement.scrollIntoView({ behavior: 'smooth' });
 }
 
-function checkCityName(cityName) {
+function cityNameHandle(cityName) {
 	const cityNameCurrent = cityName.toLowerCase();
 	let newCityName;
 
@@ -19,15 +19,17 @@ function checkCityName(cityName) {
 }
 
 function renderUI({ dataFromWeatherbit, dataFromPixabay }, daysRemain) {
-	// dataFromWeatherbit
+	// access section element have id="info"
 	const infoSection = $('#info');
+
+	// dataFromWeatherbit
+	if (!dataFromWeatherbit) return;
 	const cityName = dataFromWeatherbit.city_name;
 	const dataWeather = dataFromWeatherbit['data'];
 	const highTemp = dataWeather[dataWeather.length - 1].max_temp;
 	const lowTemp = dataWeather[dataWeather.length - 1].low_temp;
-	const timeTravel = new Date(
-		dataWeather[dataWeather.length - 1].datetime
-	).toDateString();
+	const dateTime = dataWeather[dataWeather.length - 1].datetime;
+	const timeTravel = new Date(dateTime).toDateString();
 
 	let timeRemain;
 	if (daysRemain > 1) {
@@ -40,21 +42,26 @@ function renderUI({ dataFromWeatherbit, dataFromPixabay }, daysRemain) {
 
 	// dataFromPixabay
 	const arrayPictures = dataFromPixabay.hits;
-	const cityNameChecked = checkCityName(cityName);
-	let webformatURL;
+	const cityNameHandled = cityNameHandle(cityName);
+	let pictureURL;
+	let isHavePicture = false;
 	arrayPictures.map((picture) => {
-		if (picture.tags.includes(cityNameChecked)) {
-			webformatURL = picture.webformatURL;
-			console.log(webformatURL)
+		if (picture.tags.includes(cityNameHandled)) {
+			pictureURL = picture.webformatURL;
+			isHavePicture = true;
 		}
 	});
+
+	if (!isHavePicture) {
+		pictureURL = arrayPictures[arrayPictures.length - 1].webformatURL;
+	}
 
 	// render to UI
 	const html = `
 		<div class="banner">
 		</div>
 		<div class="container-info">
-			<img src="${webformatURL}" alt="picture of city">
+			<img src="${pictureURL}" alt="picture of city">
 			<ul>
 				<li>
 					<i class="fas fa-map-marker-alt"></i>
@@ -102,7 +109,7 @@ async function app() {
 			) + 2;
 		const daysRemain = daysForecast - 1;
 
-		const data = { city: city.value, date: date.value, daysForecast };
+		const data = { city: city.value, daysForecast };
 		const localServer = 'http://localhost:9000/data';
 
 		Client.postDataToServer(data, localServer)
@@ -117,4 +124,4 @@ async function app() {
 	// backToTop.addEventListener('click', scrollToElement);
 }
 
-export { app, checkCityName };
+export { app, cityNameHandle };

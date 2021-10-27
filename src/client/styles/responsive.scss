@@ -35,13 +35,16 @@
 				justify-content: center;
 
 				img {
-					margin: 2rem;
-					max-width: 80%;
-					max-height: 50vh;
+					margin: 3rem 0;
+					max-width: 100%;
+					width: 80%;
+					max-height: 80vh;
+					border-radius: 1rem;
 				}
 
 				ul {
 					width: 80%;
+					border-radius: 1rem;
 
 					li {
 						font-size: 2rem;

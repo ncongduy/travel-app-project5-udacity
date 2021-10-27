@@ -50,7 +50,7 @@ async function getData(data) {
 
 		return { dataFromWeatherbit, dataFromPixabay };
 	} catch (error) {
-		alert(error);
+		console.log(error);
 	}
 }
 
@@ -80,7 +80,9 @@ app.get('/data', function (req, res) {
 
 app.post('/data', function (req, res) {
 	console.log('POST', req.body);
-	getData(req.body).then((dataReceive) => res.send(dataReceive));
+	getData(req.body)
+		.then((dataReceive) => res.send(dataReceive))
+		.catch((error) => console.log(error));
 });
 
 // run server at port 9000
