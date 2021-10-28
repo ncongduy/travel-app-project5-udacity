@@ -1,17 +1,47 @@
 export function renderUI(
-	{ dataFromWeatherbit, dataFromPixabay }, dateTravel,
+	{ dataFromWeatherbit, dataFromPixabay },
+	dateTravel,
 	daysRemain,
 	infoSection
 ) {
+	let html;
+
+	if (dataFromWeatherbit.data === null) {
+		html = `
+		<div class="banner">
+		</div>
+		<div class="container-info">
+			<img src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569_1280.jpg" alt="not find travel information">
+			<ul>
+				<li>					
+					<p>Not found your location.</p>
+				</li>	
+				<li>					
+					<p>Please try again or choose another place.</p>
+				</li>				
+			</ul>
+		</div>
+		<div class="back-to-top" data-scroll="header">
+			<i class="fas fa-3x fa-arrow-alt-circle-up" data-scroll="header"></i>
+		</div>
+		`;
+		infoSection.innerHTML = html;
+		return;
+	}
+
 	// data from Weatherbit
 	const { cityName, highTemp, lowTemp, timeTravel, timeRemain } =
-		Client.handleDataFromWeatherbit(dataFromWeatherbit, dateTravel, daysRemain);
+		Client.handleDataFromWeatherbit(
+			dataFromWeatherbit,
+			dateTravel,
+			daysRemain
+		);
 
 	// data from Pixabay
 	const pictureURL = Client.handleDataFromPixabay(dataFromPixabay, cityName);
 
 	// render to UI
-	const html = `
+	html = `
 		<div class="banner">
 		</div>
 		<div class="container-info">

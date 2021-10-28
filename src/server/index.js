@@ -26,23 +26,60 @@ const apiKeyPixabay = process.env.API_KEY_PIXABAY;
 const dataFromWeatherbit = {};
 const dataFromPixabay = {};
 
+function notFoundData() {
+	Object.assign(dataFromWeatherbit, { data: null });
+	Object.assign(dataFromPixabay, { data: null });
+
+	return { dataFromWeatherbit, dataFromPixabay };
+}
+
+function cityNameHandle(cityName) {
+	const cityNameCurrent = cityName.toLowerCase();
+	let newCityName;
+
+	if (cityNameCurrent.includes('city')) {
+		newCityName = cityNameCurrent.replace('city', '').trim();
+	} else {
+		newCityName = cityNameCurrent.trim();
+	}
+
+	return newCityName;
+}
+
 async function getData(data) {
 	try {
+		//
 		// fetch data from GeoNames
+		//
 		const urlGeoNames = `http://api.geonames.org/searchJSON?style=SHORT&username=${username}&maxRows=1&q=${data.city}`;
 		const fetchGeoNames = await fetch(urlGeoNames);
 		const dataGeoNames = await fetchGeoNames.json();
+
+		// validate data from GeoNames
+		if (dataGeoNames.totalResultsCount === 0) {
+			return notFoundData();
+		}
+
 		const latitude = dataGeoNames.geonames[0].lat;
 		const longitude = dataGeoNames.geonames[0].lng;
 
+		//
 		// fetch data from Weatherbit
+		//
 		const urlWeatherbitForecast = `https://api.weatherbit.io/v2.0/forecast/daily?key=${apiKeyWeatherbit}&lat=${latitude}&lon=${longitude}&days=${data.daysForecast}`;
 		const fetchWeatherbit = await fetch(urlWeatherbitForecast);
 		const dataWeatherbit = await fetchWeatherbit.json();
 		Object.assign(dataFromWeatherbit, dataWeatherbit);
 		const cityName = dataFromWeatherbit.city_name;
 
+		// validate data from Weatherbit
+		if (data.city.trim().toLowerCase() !== cityNameHandle(cityName)) {
+			return notFoundData();
+		}
+
+		//
 		// fetch data from Pixabay
+		//
 		const urlPixabay = `https://pixabay.com/api/?key=${apiKeyPixabay}&q=${cityName}&image_type=photo&pretty=true`;
 		const fetchPixabay = await fetch(urlPixabay);
 		const dataPixabay = await fetchPixabay.json();
@@ -53,6 +90,9 @@ async function getData(data) {
 		console.log(error);
 	}
 }
+
+// getData({ city: 'Helsink', daysForecast: 3 });
+// getData({ city: 'Ho Chi Min', daysForecast: 3 });
 
 // setup static direction to dist folder
 app.use(express.static('dist'));

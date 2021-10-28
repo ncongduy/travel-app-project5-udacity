@@ -37,7 +37,12 @@ async function app() {
 				localStorage.setItem('database', JSON.stringify(database));
 
 				// render to UI
-				Client.renderUI(dataResponse, dateTravel, daysRemain, infoSection);
+				Client.renderUI(
+					dataResponse,
+					dateTravel,
+					daysRemain,
+					infoSection
+				);
 			})
 			.then(() => {
 				$('#city').value = '';
@@ -46,7 +51,7 @@ async function app() {
 			})
 			.catch((err) => console.log(err));
 
-		setTimeout(() => Client.scrollToElement(evt.target), 1500);
+		setTimeout(() => Client.scrollToElement(evt.target), 2000);
 	});
 
 	// when user click icon backToTop, website scroll to top

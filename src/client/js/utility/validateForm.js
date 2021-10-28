@@ -9,20 +9,15 @@ export function validateForm(city, date, daysForecast) {
 	let maxDate = new Date();
 	maxDate.setDate(currentDate.getDate() + 15);
 
-	// validate when user don't type in
-	if (cityValue === '' && dateValue === '') {
+	// validate city name
+	if (cityValue === '') {
 		dateElement[0].classList.add('invalid-form');
-		dateElement[0].textContent = `Please provide a valid city.`;
-		
-		dateElement[1].classList.add('invalid-form');
-		dateElement[1].textContent = `Please provide a valid date (from ${currentDate.toDateString()} to ${maxDate.toDateString()}).`;
+		dateElement[0].textContent = `Please provide a city name.`;		
 		return false;
 	} else {
 		dateElement[0].classList.remove('invalid-form');
-		dateElement[1].classList.remove('invalid-form');
 	}
 
-	// check city name 
 	if (!Client.checkCityName(cityValue)) {
 		dateElement[0].classList.add('invalid-form');
 		dateElement[0].textContent = `Please provide a valid city.`;
@@ -31,10 +26,18 @@ export function validateForm(city, date, daysForecast) {
 		dateElement[0].classList.remove('invalid-form');
 	}
 
-	// check date travel
+	// validate date
+	if (dateValue === '') {		
+		dateElement[1].classList.add('invalid-form');
+		dateElement[1].textContent = `Please provide a travel date.`;
+		return false;
+	} else {
+		dateElement[1].classList.remove('invalid-form');
+	}
+
 	if (daysForecast < 1 || daysForecast > 16) {
 		dateElement[1].classList.add('invalid-form');
-		dateElement[1].textContent = `Please provide a valid date (from ${currentDate.toDateString()} to ${maxDate.toDateString()}).`;
+		dateElement[1].textContent = `A valid date is from ${currentDate.toDateString()} to ${maxDate.toDateString()}.`;
 		return false;
 	} else {
 		dateElement[1].classList.remove('invalid-form');
