@@ -41,5 +41,10 @@ Code is created by Nguyen Cong Duy. I used starter code from [project 4](https:/
 - [Weatherbit](https://www.weatherbit.io/)
 - [Pixabay](https://pixabay.com/api/docs/)
 - [Bootstrap](https://getbootstrap.com/) 
+- [Stackoverflow](https://stackoverflow.com/)
+- [W3school](https://www.w3schools.com/)
+- [MDN](https://developer.mozilla.org/en-US/)
+
+
 
 

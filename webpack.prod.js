@@ -19,13 +19,28 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: '/\.js$/',
+				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 			},
 			{
 				test: /\.scss$/,
 				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+			},
+			{
+				test: /\.html$/,
+				use: ['html-loader'],
+			},
+			{
+				test: /\.(png|jpe?g|gif)$/i,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: '[name].[ext]',
+						},
+					},
+				],
 			},
 		],
 	},
