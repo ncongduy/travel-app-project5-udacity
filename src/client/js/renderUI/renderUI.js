@@ -1,11 +1,11 @@
 export function renderUI(
-	{ dataFromWeatherbit, dataFromPixabay },
+	{ dataFromWeatherbit, dataFromPixabay }, dateTravel,
 	daysRemain,
 	infoSection
 ) {
 	// data from Weatherbit
 	const { cityName, highTemp, lowTemp, timeTravel, timeRemain } =
-		Client.handleDataFromWeatherbit(dataFromWeatherbit, daysRemain);
+		Client.handleDataFromWeatherbit(dataFromWeatherbit, dateTravel, daysRemain);
 
 	// data from Pixabay
 	const pictureURL = Client.handleDataFromPixabay(dataFromPixabay, cityName);

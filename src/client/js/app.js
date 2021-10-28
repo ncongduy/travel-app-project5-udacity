@@ -22,6 +22,11 @@ async function app() {
 			) + 2;
 		const daysRemain = daysForecast - 1;
 
+		console.log('dateCurrent', dateCurrent);
+		console.log('dateTravel', dateTravel);
+		console.log('daysForecast', daysForecast);
+		console.log('daysRemain', daysRemain);
+
 		// validate data user type in
 		if (!Client.validateForm(form, city, date, daysForecast)) return;
 
@@ -33,11 +38,11 @@ async function app() {
 			.then((localServer) => Client.getDataFromServer(localServer))
 			.then((dataResponse) => {
 				// save to localStorage
-				const database = [dataResponse, daysRemain];
+				const database = [dataResponse, dateTravel, daysRemain];
 				localStorage.setItem('database', JSON.stringify(database));
 
 				// render to UI
-				Client.renderUI(dataResponse, daysRemain, infoSection);
+				Client.renderUI(dataResponse, dateTravel, daysRemain, infoSection);
 			})
 			.then(() => {
 				$('#city').value = '';
@@ -60,8 +65,8 @@ async function app() {
 	window.addEventListener('load', () => {
 		const dataFromLocalStorage =
 			JSON.parse(localStorage.getItem('database')) || [];
-		const [dataResponse, daysRemain] = dataFromLocalStorage;
-		Client.renderUI(dataResponse, daysRemain, infoSection);
+		const [dataResponse, dateTravel, daysRemain] = dataFromLocalStorage;
+		Client.renderUI(dataResponse, dateTravel, daysRemain, infoSection);
 	});
 }
 
