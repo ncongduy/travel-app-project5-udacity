@@ -22,13 +22,8 @@ async function app() {
 			) + 2;
 		const daysRemain = daysForecast - 1;
 
-		console.log('dateCurrent', dateCurrent);
-		console.log('dateTravel', dateTravel);
-		console.log('daysForecast', daysForecast);
-		console.log('daysRemain', daysRemain);
-
 		// validate data user type in
-		if (!Client.validateForm(form, city, date, daysForecast)) return;
+		if (!Client.validateForm(city, date, daysForecast)) return;
 
 		// send request to server
 		const data = { city: city.value, daysForecast };
