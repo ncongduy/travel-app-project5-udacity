@@ -3,7 +3,7 @@ main {
 	padding: 10vh 0;
 
 	#form {
-		background-image: url('https://cdn.pixabay.com/photo/2018/07/16/16/08/island-3542290_1280.jpg');
+		background-image: url('../img/background.jpg');
 		background-size: cover;
 		background-repeat: no-repeat;
 		background-position: center;
@@ -85,6 +85,10 @@ main {
 			right: 5vh;
 			z-index: 3;
 			cursor: pointer;
+
+			&:hover {
+				opacity: 0.7;
+			}
 		}
 	}
 }
