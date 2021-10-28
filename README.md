@@ -1,9 +1,8 @@
 # Travel App
-This is project 4 from the Udacity Front End Nanodegree program. This project is a web app, which fetch API from MeaningCloud (https://www.meaningcloud.com/).
-
+This is Capstone project from the Udacity Front End Nanodegree program. This project is a web app, which fetch API from [GeoNames](http://www.geonames.org/), [Weatherbit](https://www.weatherbit.io/) and [Pixabay](https://pixabay.com/api/docs/). 
 
 ## Usage
-User can type in a text or paste a link to input. After that, user will receive analysis of content, which are sentiment, agreement, subjectivity, irony.
+User provide name of city and travel date in input field. After that, user will receive picture and information about location, where user want to travel.
 
 ## The goal of project
 This project help me to practice with:
@@ -13,11 +12,13 @@ This project help me to practice with:
 - Creating layouts and page design
 - Service workers
 - Using APIs and creating requests to external urls
-- Using environment variable (process.env.API_KEY)
+- Using environment variable (process.env.USER_NAME_GEONAMES)
+- Using localStorage to save data
+- Validate user input
+- Using Jest to test
 
 ## How to run project
-- clone project: "git clone https://github.com/ncongduy/project4-evaluate-nlp.git"
-- change branch: "git checkout stage-6"
+- clone project: "git clone https://github.com/ncongduy/travel-app.git"
 - In bash type: "npm install"
 - Run project in dev environment, type in bash: "npm run build-dev"
 - Build product environment, type in bash: "npm run build-prod"
@@ -25,14 +26,20 @@ This project help me to practice with:
 - Test with Jest, type in bash: "npm run test"
 
 Navigate to http://localhost:8080/ in your browser for dev environment.
-Navigate to http://localhost:5000/ in your browser for product environment.
+Navigate to http://localhost:9000/ in your browser for product environment.
 
 ## Demo
-
-![Demo web app](/src/client/img/evaluate-news-nlp.png)
+![Demo travel app](/src/client/img/capstone.JPG)
 
 
 ## Author
-Code is created by Nguyen Cong Duy. I used starter code from Udacity.
+Code is created by Nguyen Cong Duy. I used starter code from [project 4](https://github.com/ncongduy/project4-evaluate-nlp/tree/stage-6)
+
+## Sources
+- [Udacity](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011)
+- [GeoNames](http://www.geonames.org/)
+- [Weatherbit](https://www.weatherbit.io/)
+- [Pixabay](https://pixabay.com/api/docs/)
+- [Bootstrap](https://getbootstrap.com/) 
 
 
