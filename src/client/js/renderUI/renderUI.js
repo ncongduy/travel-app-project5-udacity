@@ -6,6 +6,35 @@ export function renderUI(
 ) {
 	let html;
 
+	// 
+	// render when error connection
+	// 
+	if (!dataFromWeatherbit || !dataFromPixabay) {
+		html = `
+		<div class="banner">
+		</div>
+		<div class="container-info">
+			<img src="https://cdn.pixabay.com/photo/2013/04/01/09/21/connection-broken-98523_1280.png" alt="error connection">
+			<ul>
+				<li>					
+					<p>Error connection.</p>
+				</li>	
+				<li>					
+					<p>Server is not run correctly.</p>
+				</li>				
+			</ul>
+		</div>
+		<div class="back-to-top" data-scroll="header">
+			<i class="fas fa-3x fa-arrow-alt-circle-up" data-scroll="header"></i>
+		</div>
+		`;
+		infoSection.innerHTML = html;
+		return;
+	}
+
+	// 
+	// render when not found location
+	// 
 	if (dataFromWeatherbit.data === null) {
 		html = `
 		<div class="banner">
@@ -28,6 +57,10 @@ export function renderUI(
 		infoSection.innerHTML = html;
 		return;
 	}
+
+	// 
+	// render when receive successful data
+	// 
 
 	// data from Weatherbit
 	const { cityName, highTemp, lowTemp, timeTravel, timeRemain } =

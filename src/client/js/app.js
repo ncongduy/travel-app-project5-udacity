@@ -3,7 +3,6 @@ async function app() {
 	const $ = document.querySelector.bind(document);
 	const searchBtn = $('#search-btn');
 	const infoSection = $('#info');
-	const form = $('.needs-validation');
 
 	// add event listener for search button
 	searchBtn.addEventListener('click', (evt) => {
@@ -47,11 +46,9 @@ async function app() {
 			.then(() => {
 				$('#city').value = '';
 				$('#date').value = '';
-				form.classList.remove('was-validated');
 			})
+			.then(() => Client.scrollToElement(evt.target))
 			.catch((err) => console.log(err));
-
-		setTimeout(() => Client.scrollToElement(evt.target), 2000);
 	});
 
 	// when user click icon backToTop, website scroll to top
@@ -63,10 +60,19 @@ async function app() {
 
 	// render UI when user reload website
 	window.addEventListener('load', () => {
+		// receive data from localStorage
 		const dataFromLocalStorage =
 			JSON.parse(localStorage.getItem('database')) || [];
 		const [dataResponse, dateTravel, daysRemain] = dataFromLocalStorage;
-		if (!dataResponse) return;
+
+		// validate data from localStorage
+		if (!dataResponse.dataFromWeatherbit || !dataResponse.dataFromPixabay) {
+			console.log('Clear old render if have error connection.');
+			infoSection.innerHTML = '';
+			return;
+		}
+
+		// render to UI
 		Client.renderUI(dataResponse, dateTravel, daysRemain, infoSection);
 	});
 }

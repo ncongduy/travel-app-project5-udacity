@@ -6,7 +6,8 @@ async function getDataFromServer(localServer) {
 
 		return dataResponse;
 	} catch (error) {
-		console.log(error);
+		console.log(':::error connection:::', error);
+		return {};
 	}
 }
 
