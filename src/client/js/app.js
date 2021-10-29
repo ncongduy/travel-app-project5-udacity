@@ -67,7 +67,6 @@ async function app() {
 
 		// validate data from localStorage
 		if (!dataResponse || Object.keys(dataResponse).length === 0) {
-			console.log('Clear old render if have error connection.');
 			infoSection.innerHTML = '';
 			return;
 		}
