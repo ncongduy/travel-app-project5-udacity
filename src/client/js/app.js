@@ -66,6 +66,7 @@ async function app() {
 		const dataFromLocalStorage =
 			JSON.parse(localStorage.getItem('database')) || [];
 		const [dataResponse, dateTravel, daysRemain] = dataFromLocalStorage;
+		if (!dataResponse) return;
 		Client.renderUI(dataResponse, dateTravel, daysRemain, infoSection);
 	});
 }
