@@ -66,7 +66,7 @@ async function app() {
 		const [dataResponse, dateTravel, daysRemain] = dataFromLocalStorage;
 
 		// validate data from localStorage
-		if (!dataResponse.dataFromWeatherbit || !dataResponse.dataFromPixabay) {
+		if (!dataResponse || Object.keys(dataResponse).length === 0) {
 			console.log('Clear old render if have error connection.');
 			infoSection.innerHTML = '';
 			return;
