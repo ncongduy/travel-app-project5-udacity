@@ -50,6 +50,7 @@ module.exports = {
 		new HtmlWebPackPlugin({
 			template: './src/client/views/index.html',
 			filename: './index.html',
+			favicon: "favicon.ico",
 		}),
 		new MiniCssExtractPlugin({ filename: '[name].css' }),
 		new CleanWebpackPlugin({
