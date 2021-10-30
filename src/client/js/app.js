@@ -26,7 +26,7 @@ async function app() {
 
 		// send request to server
 		const data = { city: city.value, daysForecast };
-		const localServer = 'http://localhost:9000/data';
+		const localServer = 'https://travel-app-project5-udacity.herokuapp.com/data';
 
 		Client.postDataToServer(data, localServer)
 			.then((localServer) => Client.getDataFromServer(localServer))

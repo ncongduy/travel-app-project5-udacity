@@ -128,5 +128,5 @@ app.post('/data', function (req, res) {
 // run server at port 9000
 const port = process.env.PORT || 9000;
 app.listen(port, function () {
-	console.log(`App listening at http://localhost:${port}`);
+	console.log(`App listening on port: ${port}`);
 });
